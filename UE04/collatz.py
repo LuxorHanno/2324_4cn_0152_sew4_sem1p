@@ -3,7 +3,7 @@ __version__ = "1.0"
 __status__ = "Finished"
 
 
-def collatz(n: int):
+def collatz(n: int) -> int:
     """
     Diese Funktion führt einen Schritt der Collatzfolge aus.
 
@@ -55,6 +55,9 @@ def longes_collatz_sequence(n: int) -> tuple[int, int]:
 
     >>> l = longes_collatz_sequence(100);l
     (97, 119)
+
+    >>> m = longes_collatz_sequence(20000);m
+    (17647, 279)
 
     :param n: Eingabewert
     :return: Ausgabewert (Startwert, Länge der Collatzfolge)

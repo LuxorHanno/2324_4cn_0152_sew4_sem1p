@@ -27,7 +27,7 @@ def is_palindrom_sentence(s: str):
     Diese Methode überprüft, ob ein String ein Palindrom ist.
     Dabei beachtet sie nicht die Groß- und Kleinschreibung und auch keine Satzzeichen.
 
-    >>> l = is_palindrom_sentence("Regn kann auch schweben");l
+    >>> l = is_palindrom_sentence("Regen kann auch schweben");l
     False
 
     >>> l = is_palindrom_sentence("Oh, Cello! Voll Echo!");l
@@ -71,27 +71,14 @@ def palindrom_product(x):
 
     return max_palindrome
 
-# Erste Idee:
-#max_palindrome = 0
-#
-#    for i in range(1000, 100, -1):
-#        for j in range(1000, 100, -1):
-#            product = i * j
-#            if product < x and str(product) == str(product)[::-1]:
-#                return product
-#
-#    return -1
-
-
 def to_base(number, base):
     """
     Diese Methode konvertiert eine Zahl in ein anderes Zahlensystem.
 
-    >>> l = to_base(10, 2);l
-    '1010'
+
 
     >>> l = to_base(10, 16);l
-    'a'
+    'A'
 
     :param number: Nummer, die konvertiert werden soll
     :param base: Zielsystem
@@ -101,7 +88,7 @@ def to_base(number, base):
     if number == 0:
         return '0'
 
-    hex_chars = '0123456789abcdef'
+    hex_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     result = ''
     while number > 0:
         remainder = number % base
@@ -114,18 +101,18 @@ def to_base(number, base):
 def get_dec_hex_palindrom(x):
     """
     Diese Methode berechnet das größte Palindrom, das sowohl in Dezimal- als auch in Hexadezimaldarstellung ein Palindrom ist.
-    Das Produkt muss kleiner als x sein.
+    Die Dezimalausgabe muss kleiner als x sein.
 
     >>> l = get_dec_hex_palindrom(10000);l
-    '3003 (dezimal) = bbb (hexadezimal)'
+    '3003 (dezimal) = BBB (hexadezimal)'
 
     >>> l = get_dec_hex_palindrom(1000);l
-    '979 (dezimal) = 3d3 (hexadezimal)'
+    '979 (dezimal) = 3D3 (hexadezimal)'
 
     >>> l = get_dec_hex_palindrom(100);l
-    '11 (dezimal) = b (hexadezimal)'
+    '11 (dezimal) = B (hexadezimal)'
 
-    :param x: Maximalwert des Produktes
+    :param x: Maximalwert der Dezimalausgabe
     :return: Größte Palindromzahl in Dezimal- und Hexadezimaldarstellung
     """
     max_palindrome = 0

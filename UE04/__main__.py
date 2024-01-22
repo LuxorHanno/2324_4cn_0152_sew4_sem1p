@@ -5,6 +5,15 @@ __status__ = "Finished"
 from rekursiv import M
 from time import time
 
+
+print(M(87))
+print(M(99))
+print(M(101))
+print(M(111))
+print(M(87))
+print(M(99))
+print(M(101))
+print(M(111))
 t0 = time()
 m_list = [M(n) for n in range(1, 201)]
 
