@@ -58,11 +58,11 @@ class Caesar:
         """
         Diese Methode entschlüsselt einen Text mit dem Caesar-Verfahren.
 
-        //>>> c = Caesar(3)
-        //>>> c.decrypt("DEF")
-        'ABC'
+        >>> c = Caesar('C')
+        >>> c.decrypt("DEF")
+        'BCD'
 
-        //>>> c.decrypt("EFG", 4)
+        >>> c.decrypt("EFG", 'E')
         'ABC'
 
         :param plaintext: zu entschlüsselnder Text
@@ -71,19 +71,25 @@ class Caesar:
         """
         if key is None:
             key = self.__key
-        return self.encrypt(plaintext, -key)
+        return self.encrypt(plaintext, chr((ord('A') - ord(key)) % 26 + 97))
 
     @staticmethod
     def crack(plaintext: str, elements=1) -> list[str]:
         """
         Diese Methode entschlüsselt einen Text mit dem Caesar-Verfahren.
 
-        >>>crack("HAllo", 1)
+        >>> Caesar.crack("Hallo mein Name ist Grantelbart und mein Bart ist immer sehr grantig weil ich meinen grantingen Bart nicht genug ant grant medikamente gebe.", 1)
+        ['R']
 
         :param plaintext: zu entschlüsselnder Text
         :param elements: Anzahl der zu erzeugenden Elemente
         :return: Liste mit den wahrscheinlichsten Schlüsseln
         """
+        plaintext = plaintext.lower()
+        counter = Counter(plaintext)
+        most_common = counter.most_common(elements)
+        return [chr((ord('e') - ord(e[0])) % 26 + 65) for e in most_common]
+
         
 
 
