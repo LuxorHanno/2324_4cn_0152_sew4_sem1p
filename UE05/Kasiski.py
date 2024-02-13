@@ -40,4 +40,9 @@ class Kasiski:
         >>> k.alldist("heissajuchei, ein ei", "hai")
         {}
         """
+        dist = {j - i for i in self.allpos(text, teilstring) for j in self.allpos(text, teilstring) if i < j}
+        if dist == set():
+            return {}
+
+        return dist
 
