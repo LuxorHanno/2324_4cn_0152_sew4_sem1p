@@ -82,6 +82,8 @@ class Caesar:
 
         return self.encrypt(crypttext, chr((ord('a') - ord(key)) % 26 + ord('a')))
 
+
+
     def crack(self, crypttext: str, elements: int = 1) -> list[str]:
         """
         >>> str = 'Vor einem großen Walde wohnte ein armer Holzhacker mit seiner Frau und seinen zwei Kindern; das Bübchen hieß Hänsel und das Mädchen Gretel. Er hatte wenig zu beißen und zu brechen, und einmal, als große Teuerung ins Land kam, konnte er das tägliche Brot nicht mehr schaffen. Wie er sich nun abends im Bette Gedanken machte und sich vor Sorgen herumwälzte, seufzte er und sprach zu seiner Frau: "Was soll aus uns werden? Wie können wir unsere armen Kinder ernähren da wir für uns selbst nichts mehr haben?"'
