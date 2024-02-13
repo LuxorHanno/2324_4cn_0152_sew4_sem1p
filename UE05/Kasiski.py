@@ -18,5 +18,15 @@ class Kasiski:
 
     crypttext: str = property(get_crypttext)
 
+    def allpos(self, text: str, teilstring: str) -> list[int]:
+        """
+        Berechnet die Positionen von teilstring in text.
+        Usage examples:
+        >>> k = Kasiski()
+        >>> k.allpos("heissajuchei, ein ei", "ei")
+        [1, 10, 14, 18]
+        >>> k.allpos("heissajuchei, ein ei", "hai")
+        []
+        """
 
 
