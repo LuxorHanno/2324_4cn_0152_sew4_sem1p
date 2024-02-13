@@ -46,3 +46,21 @@ class Kasiski:
 
         return dist
 
+    def dist_n_tuple(self, text:str, laenge:int) -> set[tuple[str, int]]:
+        """
+        Überprüft alle Teilstrings aus text mit der gegebenen laenge und liefert ein Set
+        mit den Abständen aller Wiederholungen der Teilstrings in text.
+        Usage examples:
+        >>> k = Kasiski()
+        >>> k.dist_n_tuple("heissajuchei", 2) == {('ei', 9), ('he', 9)}
+        True
+        >>> k.dist_n_tuple("heissajuchei", 3) == {('hei', 9)}
+        True
+        >>> k.dist_n_tuple("heissajuchei", 4) == set()
+        True
+        >>> k.dist_n_tuple("heissajucheieinei", 2) == \
+        {('ei', 5), ('ei', 14), ('ei', 3), ('ei', 9), ('ei', 11), ('he', 9), ('ei', 2)}
+        True
+        """
+        return {(text[i:i + laenge], j - i) for i in range(len(text) - laenge + 1) for j in range(i + laenge, len(text)) if text[i:i + laenge] == text[j:j + laenge]}
+
