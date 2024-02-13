@@ -63,6 +63,17 @@ class Vigenere:
         :return: Verschlüsselter Text
         """
 
+        if key is None:
+            key = self.__key
+
+        key = Caesar().to_lowercase_letter_only(key)
+        crypttext = Caesar().to_lowercase_letter_only(crypttext)
+
+        c = Caesar()
+        for i in range(len(crypttext)):
+            crypttext = crypttext[:i] + c.decrypt(crypttext[i], key[i % len(key)]) + crypttext[i + 1:]
+
+        return crypttext
 
 
 
