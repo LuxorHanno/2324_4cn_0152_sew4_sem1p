@@ -28,5 +28,5 @@ class Kasiski:
         >>> k.allpos("heissajuchei, ein ei", "hai")
         []
         """
-
+        return [i for i in range(len(text)) if text[i:i + len(teilstring)] == teilstring]
 
