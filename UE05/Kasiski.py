@@ -30,3 +30,14 @@ class Kasiski:
         """
         return [i for i in range(len(text)) if text[i:i + len(teilstring)] == teilstring]
 
+    def alldist(self, text:str, teilstring:str) -> set[int]:
+        """
+        Berechnet die Abstände zwischen den Wiederholungen des Teilstrings im verschlüsselten Text.
+        Usage examples:
+        >>> k = Kasiski()
+        >>> k.alldist("heissajuchei, ein ei", "ei")
+        {4, 8, 9, 13, 17}
+        >>> k.alldist("heissajuchei, ein ei", "hai")
+        {}
+        """
+
