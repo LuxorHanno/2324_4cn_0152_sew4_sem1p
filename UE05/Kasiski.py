@@ -64,3 +64,17 @@ class Kasiski:
         """
         return {(text[i:i + laenge], j - i) for i in range(len(text) - laenge + 1) for j in range(i + laenge, len(text)) if text[i:i + laenge] == text[j:j + laenge]}
 
+    def dist_n_list(self, text:str, laenge:int) -> list[int]:
+        """
+        Wie dist_tuple, liefert aber nur eine aufsteigend sortierte Liste der
+        Abstände ohne den Text zurück. In der Liste soll kein Element mehrfach vorkommen.
+        Usage examples:
+        >>> k = Kasiski()
+        >>> k.dist_n_list("heissajucheieinei", 2) == [2, 3, 5, 9, 11, 14]
+        True
+        >>> k.dist_n_list("heissajucheieinei", 3) == [9]
+        True
+        >>> k.dist_n_list("heissajucheieinei", 4) == []
+        True
+        """
+        return sorted(set([j - i for i in range(len(text) - laenge + 1) for j in range(i + laenge, len(text)) if text[i:i + laenge] == text[j:j + laenge]]))
