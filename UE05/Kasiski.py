@@ -1,7 +1,9 @@
 from collections import Counter
-
+from Caesar import Caesar
 
 class Kasiski:
+
+
 
     def __init__(self, crypttext: str = ""):
         """
@@ -123,5 +125,20 @@ class Kasiski:
         'asektrx'
         """
         return s[start::n]
+
+    def crack_key(self, len: int):
+        """
+        Diese Methode liefert den Wahrscheinlichsten schlüssel zurück.
+        Usage examples:
+        >>> k = Kasiski("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        >>> k.crack_key(5)
+        'aaaaa'
+        """
+        c = Caesar()
+        crypttxt = c.to_lowercase_letter_only(self.crypttext)
+
+        partstr = [self.get_nth_letter(crypttxt, i, len) for i in range(len)]
+
+        return ''.join([c.crack(partstr[i], 1)[0] for i in range(len)])
 
 
