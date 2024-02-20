@@ -1,3 +1,4 @@
+from collections import Counter
 class Kasiski:
 
     def __init__(self, crypttext: str = ""):
@@ -78,3 +79,33 @@ class Kasiski:
         True
         """
         return sorted(set([j - i for i in range(len(text) - laenge + 1) for j in range(i + laenge, len(text)) if text[i:i + laenge] == text[j:j + laenge]]))
+
+    def ggt(self, x:int, y:int)->int:
+        """
+        Ermittelt den größten gemeinsamen Teiler von x und y.
+        Usage examples:
+        >>> k = Kasiski()
+        >>> k.ggt(10, 25)
+        5
+        >>> k.ggt(12, 14)
+        2
+        """
+        while y != 0:
+            x, y = y, x % y
+        return x
+
+    def ggt_count(self, zahlen: list[int])->Counter:
+        """
+        Bestimmt die Häufigkeit der paarweisen ggt aller Zahlen aus list.
+        Usage examples:
+        >>> k = Kasiski()
+        >>> k.ggt_count([12, 14, 16])
+        Counter({2: 2, 12: 1, 4: 1, 14: 1, 16: 1})
+        >>> k.ggt_count([10, 25, 50, 100])
+        Counter({10: 3, 25: 3, 50: 2, 5: 1, 100: 1})
+        """
+        c = Counter()
+        for i in range(len(zahlen)):
+            for j in range(i, len(zahlen)):
+                c[self.ggt(zahlen[i], zahlen[j])] += 1
+        return c
