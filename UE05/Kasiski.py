@@ -1,4 +1,6 @@
 from collections import Counter
+
+
 class Kasiski:
 
     def __init__(self, crypttext: str = ""):
@@ -31,7 +33,7 @@ class Kasiski:
         """
         return [i for i in range(len(text)) if text[i:i + len(teilstring)] == teilstring]
 
-    def alldist(self, text:str, teilstring:str) -> set[int]:
+    def alldist(self, text: str, teilstring: str) -> set[int]:
         """
         Berechnet die Abstände zwischen den Wiederholungen des Teilstrings im verschlüsselten Text.
         Usage examples:
@@ -47,7 +49,7 @@ class Kasiski:
 
         return dist
 
-    def dist_n_tuple(self, text:str, laenge:int) -> set[tuple[str, int]]:
+    def dist_n_tuple(self, text: str, laenge: int) -> set[tuple[str, int]]:
         """
         Überprüft alle Teilstrings aus text mit der gegebenen laenge und liefert ein Set
         mit den Abständen aller Wiederholungen der Teilstrings in text.
@@ -63,9 +65,10 @@ class Kasiski:
         {('ei', 5), ('ei', 14), ('ei', 3), ('ei', 9), ('ei', 11), ('he', 9), ('ei', 2)}
         True
         """
-        return {(text[i:i + laenge], j - i) for i in range(len(text) - laenge + 1) for j in range(i + laenge, len(text)) if text[i:i + laenge] == text[j:j + laenge]}
+        return {(text[i:i + laenge], j - i) for i in range(len(text) - laenge + 1) for j in range(i + laenge, len(text))
+                if text[i:i + laenge] == text[j:j + laenge]}
 
-    def dist_n_list(self, text:str, laenge:int) -> list[int]:
+    def dist_n_list(self, text: str, laenge: int) -> list[int]:
         """
         Wie dist_tuple, liefert aber nur eine aufsteigend sortierte Liste der
         Abstände ohne den Text zurück. In der Liste soll kein Element mehrfach vorkommen.
@@ -78,9 +81,10 @@ class Kasiski:
         >>> k.dist_n_list("heissajucheieinei", 4) == []
         True
         """
-        return sorted(set([j - i for i in range(len(text) - laenge + 1) for j in range(i + laenge, len(text)) if text[i:i + laenge] == text[j:j + laenge]]))
+        return sorted(set([j - i for i in range(len(text) - laenge + 1) for j in range(i + laenge, len(text)) if
+                           text[i:i + laenge] == text[j:j + laenge]]))
 
-    def ggt(self, x:int, y:int)->int:
+    def ggt(self, x: int, y: int) -> int:
         """
         Ermittelt den größten gemeinsamen Teiler von x und y.
         Usage examples:
@@ -94,7 +98,7 @@ class Kasiski:
             x, y = y, x % y
         return x
 
-    def ggt_count(self, zahlen: list[int])->Counter:
+    def ggt_count(self, zahlen: list[int]) -> Counter:
         """
         Bestimmt die Häufigkeit der paarweisen ggt aller Zahlen aus list.
         Usage examples:
@@ -109,3 +113,15 @@ class Kasiski:
             for j in range(i, len(zahlen)):
                 c[self.ggt(zahlen[i], zahlen[j])] += 1
         return c
+
+    def get_nth_letter(self, s: str, start: int, n: int) -> str:
+        """
+        Extrahiert aus s jeden n. Buchstaben beginnend mit index start.
+        Usage examples:
+        >>> k = Kasiski()
+        >>> k.get_nth_letter("Das ist kein kreativer Text.", 1, 4)
+        'asektrx'
+        """
+        return s[start::n]
+
+
