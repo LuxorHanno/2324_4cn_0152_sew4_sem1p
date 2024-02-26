@@ -33,6 +33,7 @@ class spellcheck:
         """
         Diese Methode teilt das Wort in zwei Teile und gibt eine Liste zurück.
 
+
         >>> sc = spellcheck()
         >>> sc.split_word("abc")
         [('', 'abc'), ('a', 'bc'), ('ab', 'c'), ('abc', '')]
