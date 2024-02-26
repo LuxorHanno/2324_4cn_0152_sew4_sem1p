@@ -1,3 +1,9 @@
+__author__ = "Hanno Postl"
+__version__ = "1.3"
+__status__ = "Finished"
+
+
+
 from collections import Counter
 from UE05.Caesar import Caesar
 
@@ -29,8 +35,6 @@ class Vigenere:
         >>> en = Vigenere()
         >>> en.encrypt("Franz jagt im komplett verwahrlosten Taxi quer durch Bayern.", "StrengGeheim")
         'xkrrmpgkamuwgfgprzzzlvemzkcsfzkraefuinvvqaxgofikwke'
-
-
 
         :param plaintext: zu verschlüsselnder Text
         :param key: Schlüssel
@@ -76,6 +80,3 @@ class Vigenere:
         return crypttext
 
 
-
-if __name__ == "__main__":
-    pass

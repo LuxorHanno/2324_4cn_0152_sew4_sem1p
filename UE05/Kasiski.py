@@ -1,5 +1,13 @@
+__author__ = "Hanno Postl"
+__version__ = "1.12"
+__status__ = "Finished"
+
+
+
 from collections import Counter
 from Caesar import Caesar
+from UE05.Vigenere import Vigenere
+
 
 class Kasiski:
 
@@ -130,7 +138,7 @@ class Kasiski:
         """
         Diese Methode liefert den Wahrscheinlichsten schlüssel zurück.
         Usage examples:
-        >>> k = Kasiski("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        >>> k = Kasiski("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         >>> k.crack_key(5)
         'aaaaa'
         """
@@ -142,3 +150,17 @@ class Kasiski:
         return ''.join([c.crack(partstr[i], 1)[0] for i in range(len)])
 
 
+
+"""
+if __name__ == "__main__":
+    #Attacke auf Vigenere
+    v = Vigenere()
+    str = "Die geheime Botschaft, die ich Ihnen übermitteln muss, ist von äußerster Wichtigkeit und erfordert höchste Diskretion. Bitte nehmen Sie sich einen Moment Zeit, um diese Nachricht sorgfältig zu lesen und die Anweisungen genau zu befolgen. Unsere Zusammenarbeit und der Erfolg unserer Mission hängen davon ab. Zuerst möchte ich Sie darüber informieren, dass wir dringend ein Treffen benötigen. Dieses Treffen soll um Mitternacht stattfinden, an einem Ort, den wir im Voraus festgelegt haben. Die genauen Koordinaten werden Ihnen zu gegebener Zeit mitgeteilt. Es ist von größter Bedeutung, dass Sie pünktlich und unerkannt erscheinen.Zudem ist es unerlässlich, dass Sie den Schlüssel mitbringen. Dieser Schlüssel ist nicht nur physischer Natur, sondern symbolisiert auch die Verbindung zwischen unseren Bemühungen und dem Erfolg unserer Operation. Bewahren Sie ihn sicher auf und teilen Sie ihn mit niemandem. Bitte seien Sie äußerst wachsam und achten Sie auf verdächtige Aktivitäten. Unsere Feinde sind überall und wir müssen sicherstellen, dass wir nicht von ihnen belauscht oder entdeckt werden. Jegliche Unregelmäßigkeiten müssen sofort gemeldet werden.Das vereinbarte Zeichen wird Ihnen helfen, uns zu identifizieren. Bitte beachten Sie es sorgfältig und verwenden Sie es, um sich zu vergewissern, dass Sie mit der richtigen Person sprechen.Ich vertraue darauf, dass Sie diese Anweisungen verstehen und umsetzen können. Unsere gemeinsamen Ziele erfordern Zusammenarbeit und Engagement. Möge der Erfolg auf unserer Seite sein. Bis bald, und bleiben Sie wachsam."
+    x = v.encrypt(str, "hanno")
+    k = Kasiski(x)
+    len = k.ggt_count([k.dist_n_list(x, i) for i in range(3,6)][0]).most_common(1)[0][0]
+    key = k.crack_key(len)
+    print(key)
+    print(x)
+    print(v.decrypt(x, key))
+"""

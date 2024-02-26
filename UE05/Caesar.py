@@ -1,6 +1,10 @@
+__author__ = "Hanno Postl"
+__version__ = "1.8"
+__status__ = "Finished"
+
+
 from collections import Counter
 import re
-
 
 class Caesar:
 
