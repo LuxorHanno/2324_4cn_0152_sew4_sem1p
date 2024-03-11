@@ -13,6 +13,7 @@ class spellcheck:
         """
         self.__dictionary = dictionary
         self.__allWords = self.read_all_words()
+        self.__allWords = {w.lower() for w in self.__allWords}
 
     def get_dictionary(self) -> str:
         """
@@ -58,6 +59,7 @@ class spellcheck:
         :param wort: Wort
         :return: Menge
         """
+        wort = wort.lower()
         alphabet = 'abcdefghijklmnopqrstuvwxyz'
         splits = self.split_word(wort)
         deletes = [a + b[1:] for a, b in splits if b]
@@ -71,8 +73,8 @@ class spellcheck:
         Diese Methode gibt eine Menge von Wörtern zurück, die einen Editierabstand von 1 haben und im Wörterbuch stehen.
 
         >>> sc = spellcheck()
-        >>> sc.edit1_good("haloo")
-        {'hallo'}
+        >>> sc.edit1_good("Alsuppe")
+        {'aalsuppe'}
 
         :param wort: Wort
         :param alle_woerter: Liste
@@ -89,7 +91,7 @@ class spellcheck:
 
         >>> sc = spellcheck()
         >>> sc.edit2_good("Umschaltmechansms") #zwei fehler
-        {'Umschaltmechanismus'}
+        {'umschaltmechanismus'}
 
         :param wort: Wort
         :param alle_woerter: Liste
@@ -103,3 +105,29 @@ class spellcheck:
                 for s in self.edit1(o)
                 if s in alle_woerter}
 
+    def correct(self, wort: str, alle_woerter: list[str] = None) -> set[str]:
+        """
+        Diese Methode gibt eine Menge von Wörtern zurück, die einen Editierabstand von 0, 1 oder 2 haben und im Wörterbuch stehen.
+
+        >>> sc = spellcheck()
+        >>> sc.correct("Aalsuppe")
+        {'aalsuppe'}
+        >>> sc.correct("Alsuppe")
+        {'aalsuppe'}
+        >>> sorted(sc.correct("Alsupe"))
+        ['aalsuppe', 'absude', 'alse', 'lupe']
+
+        :param wort: Wort
+        :param alle_woerter: Liste
+        :return: Menge
+        """
+        if alle_woerter is None:
+            alle_woerter = self.__allWords
+
+
+        ret = {wort.lower() if wort.lower() in alle_woerter else None}
+        if ret == {None}:
+            ret = self.edit1_good(wort, alle_woerter)
+            if not ret:
+                ret = self.edit2_good(wort, alle_woerter)
+        return ret
