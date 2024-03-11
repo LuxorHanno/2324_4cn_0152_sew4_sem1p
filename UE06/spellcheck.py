@@ -66,7 +66,6 @@ class spellcheck:
         inserts = [a + c + b for a, b in splits for c in alphabet]
         return set(deletes + transposes + replaces + inserts)
 
-
     def edit1_good(self, wort: str, alle_woerter: list[str] = None) -> set[str]:
         """
         Diese Methode gibt eine Menge von Wörtern zurück, die einen Editierabstand von 1 haben und im Wörterbuch stehen.
