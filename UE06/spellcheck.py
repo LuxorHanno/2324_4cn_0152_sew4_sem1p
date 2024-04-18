@@ -1,6 +1,6 @@
 __author__ = "Hanno Postl"
-__version__ = "1.0"
-__status__ = "under construction"
+__version__ = "1.8"
+__status__ = "Finished"
 
 
 class spellcheck:
@@ -56,6 +56,7 @@ class spellcheck:
         """
         Diese Methode gibt eine Menge von Wörtern zurück, die einen Editierabstand von 1 haben.
 
+
         :param wort: Wort
         :return: Menge
         """
@@ -107,7 +108,8 @@ class spellcheck:
 
     def correct(self, wort: str, alle_woerter: list[str] = None) -> set[str]:
         """
-        Diese Methode gibt eine Menge von Wörtern zurück, die einen Editierabstand von 0, 1 oder 2 haben und im Wörterbuch stehen.
+        Diese Methode gibt eine Menge von Wörtern zurück, die einen Editierabstand von 0, 1 oder 2
+        haben und im Wörterbuch stehen.
 
         >>> sc = spellcheck()
         >>> sc.correct("Aalsuppe")
@@ -124,10 +126,9 @@ class spellcheck:
         if alle_woerter is None:
             alle_woerter = self.__allWords
 
-
-        ret = {wort.lower() if wort.lower() in alle_woerter else None}
+        ret = {wort.lower() if wort.lower() in alle_woerter else None}  # Überprüfung, ob das Wort richtig ist
         if ret == {None}:
-            ret = self.edit1_good(wort, alle_woerter)
+            ret = self.edit1_good(wort, alle_woerter)  # Überprüfung mit Edit-Distanz 1
             if not ret:
-                ret = self.edit2_good(wort, alle_woerter)
+                ret = self.edit2_good(wort, alle_woerter)  # Überprüfung mit Edit-Distanz 2
         return ret

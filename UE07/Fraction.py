@@ -30,7 +30,7 @@ class Fraction:
         self.denominator //= ggt
 
     @staticmethod
-    def ggt(a, b):  # Funktion für den GGT
+    def ggt(a, b):
         while b != 0:
             c = a % b
             a, b = b, c
