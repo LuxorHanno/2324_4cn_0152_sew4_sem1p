@@ -72,6 +72,34 @@ class Fraction:
         """Division"""
         return Fraction(self.numerator * other.denominator, self.denominator * other.numerator).__float__().__floor__()
 
+    def __mod__(self, other):
+        """Modulo"""
+        return Fraction((self.numerator * other.denominator)%(self.denominator * other.numerator), self.denominator * other.denominator)
+
+    def __eq__(self, other):
+        """Gleichheit"""
+        return self.numerator == other.numerator and self.denominator == other.denominator
+
+    def __ne__(self, other):
+        """Ungleichheit"""
+        return not self.__eq__(other)
+
+    def __lt__(self, other):
+        """Kleiner"""
+        return self.__float__() < other.__float__()
+
+    def __le__(self, other):
+        """Kleiner gleich"""
+        return self.__float__() <= other.__float__()
+
+    def __gt__(self, other):
+        """Größer"""
+        return self.__float__() > other.__float__()
+
+    def __ge__(self, other):
+        """Größer gleich"""
+        return self.__float__() >= other.__float__()
+
     @property
     def numerator(self) -> int:
         return self._numerator
@@ -90,11 +118,9 @@ class Fraction:
 
 
 if __name__ == "__main__":
-    f1 = Fraction(7, 6)
-    f2 = Fraction(5, 8)
-    print(f1)
-    print(f2)
-    print(f1 + f2)
-    print(f1 - f2)
-    print(f1 / f2)
-    print(f1 // f2)
+    f1 = Fraction(28, 3)
+    f2 = Fraction(4,1 )
+
+    print(f1 % f2)
+    print(9 % 4)
+    print(0.75 * 4)
