@@ -1,9 +1,10 @@
 __author__ = "Hanno Postl"
-__version__ = "1.1"
+__version__ = "1.2"
 __status__ = "work in progress"
 
 
 import argparse
+
 from Caesar import Caesar
 from Vigenere import Vigenere
 
@@ -29,7 +30,6 @@ if __name__ == "__main__":
             result = caesar.decrypt(args.text, args.key)
         else:
             result = caesar.decrypt(args.text)
-
     print(result)
 
 
