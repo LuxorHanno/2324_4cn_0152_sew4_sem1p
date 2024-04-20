@@ -3,8 +3,8 @@ __version__ = "1.8"
 __status__ = "Finished"
 
 
-from collections import Counter
 import re
+from collections import Counter
 
 class Caesar:
 
@@ -109,7 +109,3 @@ class Caesar:
 
         return [self.decrypt(key, 'e') for key, _ in
                 Counter(self.to_lowercase_letter_only(crypttext)).most_common(elements)]
-
-
-if __name__ == "__main__":
-    pass
