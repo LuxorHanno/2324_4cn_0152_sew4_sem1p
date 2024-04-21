@@ -3,7 +3,6 @@ __version__ = "1.6"
 __status__ = "work in progress"
 
 
-
 class Fraction:
     """ Klasse für Bruchzahlen
     >>> f1 = Fraction(1,2)
@@ -85,9 +84,18 @@ class Fraction:
 
     def __str__(self):
         """String Methode"""
+        ret = ""
+
+        if self._numerator < 0:
+            self.numerator *= -1
+            ret = "-"
+
         if self.numerator > self.denominator:
-            return f"{self.numerator // self.denominator} {self.numerator % self.denominator}/{self.denominator}"
-        return f"{self.numerator}/{self.denominator}"
+            if (self.numerator % self.denominator) == 0:
+                return f"{ret}{self.numerator // self.denominator}"
+            else:
+                return f"{ret}{self.numerator // self.denominator} {self.numerator % self.denominator}/{self.denominator}"
+        return f"{ret}{self.numerator}/{self.denominator}"
 
     def __repr__(self):
         """Repr Methode"""
@@ -156,12 +164,13 @@ class Fraction:
 
     def __mod__(self, other):
         """Modulo"""
-        return Fraction((self.numerator * other.denominator)%(self.denominator * other.numerator), self.denominator * other.denominator)
+        return Fraction((self.numerator * other.denominator) % (self.denominator * other.numerator),
+                        self.denominator * other.denominator)
 
     def __rmod__(self, other):
         """Modulo"""
         if isinstance(other, int):
-            return Fraction((other * self.denominator)%self.numerator, self.denominator)
+            return Fraction((other * self.denominator) % self.numerator, self.denominator)
         else:
             raise NotImplementedError
 
@@ -204,5 +213,3 @@ class Fraction:
     @denominator.setter
     def denominator(self, value):
         self._denominator = value
-
-
