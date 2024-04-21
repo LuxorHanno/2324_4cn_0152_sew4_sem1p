@@ -1,51 +1,71 @@
 __author__ = "Hanno Postl"
-__version__ = "1.2"
-__status__ = "work in progress"
-
+__version__ = "1.4"
+__status__ = "Finished"
 
 import argparse
+import os.path
+import sys
 
 from Caesar import Caesar
 from Vigenere import Vigenere
 
-
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description="Encrypt or decrypt a message using Caesar cipher.")
-    parser.add_argument("-p", "--procedure", choices=["caesar", "vigenere"], default="caesar", help="Encryption/Decryption procedure: caesar or vigenere")
-    parser.add_argument("-m", "--mode", choices=["encrypt", "decrypt"], help="Mode of operation: encrypt or decrypt")
-    parser.add_argument("-t", "--text", help="Text to be processed")
-    parser.add_argument("-k", "--key", help="Key to be used for encryption or decryption")
+    parser = argparse.ArgumentParser(description="Encrypt or decrypt a message using Caesar or Vigenere cipher.")
+    parser.add_argument("infile", help="File to be processed")
+    parser.add_argument("outfile", nargs="?", help="Output file")
+    parser.add_argument("-c", "--cipher", choices=["caesar", "c", "vigenere", "v"], default="caesar",
+                        help="Cipher to be used")
+
+    outputgroup = parser.add_mutually_exclusive_group()
+    cryptogroup = parser.add_mutually_exclusive_group()
+
+    outputgroup.add_argument("-v", "--verbose", action="store_true", help="Verbose mode")
+    outputgroup.add_argument("-q", "--quiet", action="store_true", help="Quiet mode")
+    cryptogroup.add_argument("-d", "--decrypt", action="store_true", help="Decrypt mode")
+    cryptogroup.add_argument("-e", "--encrypt", action="store_true", help="Encrypt mode")
+    parser.add_argument("-k", "--key", help="Encryption key")
 
     args = parser.parse_args()
 
-    if args.procedure == "vigenere":
-        vigenere = Vigenere()
+    if not os.path.exists(args.infile):
+        sys.stderr.write(args.infile + ": " + os.strerror(2))
 
-        if args.mode == "encrypt":
-            if args.key:
-                result = vigenere.encrypt(args.text, args.key)
-            else:
-                result = vigenere.encrypt(args.text)
-        elif args.mode == "decrypt":
-            if args.key:
-                result = vigenere.decrypt(args.text, args.key)
-            else:
-                result = vigenere.decrypt(args.text)
+    else:
 
-    elif args.procedure == "caesar":
-        caesar = Caesar()
+        with open(args.infile, "r") as f:
+            text: str = f.read()
 
-        if args.mode == "encrypt":
-            if args.key:
-                result = caesar.encrypt(args.text, args.key)
-            else:
-                result = caesar.encrypt(args.text)
-        elif args.mode == "decrypt":
-            if args.key:
-                result = caesar.decrypt(args.text, args.key)
-            else:
-                result = caesar.decrypt(args.text)
-    print(result)
+        if args.cipher in ["caesar", "c"]:
+            caesar = Caesar(args.key)
+
+            if args.encrypt:
+                result: str = caesar.encrypt(text, args.key)
+                if args.verbose:
+                    print(
+                        f"Encrypting Caesar with key = {args.key} from file {args.infile} into file {args.outfile}")
+
+            elif args.decrypt:
+                result: str = caesar.decrypt(text, args.key)
+                if args.verbose:
+                    print(
+                        f"Decrypting Caesar with key = {args.key} from file {args.infile} into file {args.outfile}")
 
 
+        elif args.cipher in ["vigenere", "v"]:
+            vigenere = Vigenere(args.key)
+
+            if args.encrypt:
+                result = vigenere.encrypt(text, args.key)
+                if args.verbose:
+                    print(
+                        f"Encrypting Vigenere with key = {args.key} from file {args.infile} into file {args.outfile}")
+
+            elif args.decrypt:
+                result = vigenere.decrypt(text, args.key)
+                if args.verbose:
+                    print(
+                        f"Decrypting Vigenere with key = {args.key} from file {args.infile} into file {args.outfile}")
+
+        with open(args.outfile, "w") as f:
+            f.write(result)
