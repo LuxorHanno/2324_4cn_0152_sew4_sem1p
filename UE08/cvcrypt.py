@@ -5,6 +5,7 @@ __status__ = "Finished"
 import argparse
 import os.path
 import sys
+sys.path.append('../UE05')
 
 from Caesar import Caesar
 from Vigenere import Vigenere

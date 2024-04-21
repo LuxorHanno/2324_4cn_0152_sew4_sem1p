@@ -6,7 +6,7 @@ __status__ = "Finished"
 
 from collections import Counter
 from Caesar import Caesar
-from UE05.Vigenere import Vigenere
+from Vigenere import Vigenere
 
 
 class Kasiski:

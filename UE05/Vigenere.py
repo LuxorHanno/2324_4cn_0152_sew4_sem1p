@@ -5,7 +5,7 @@ __status__ = "Finished"
 
 
 from collections import Counter
-from UE05.Caesar import Caesar
+from Caesar import Caesar
 
 
 class Vigenere:
