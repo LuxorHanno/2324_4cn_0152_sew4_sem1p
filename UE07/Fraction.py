@@ -1,5 +1,5 @@
 __author__ = "Hanno Postl"
-__version__ = "1.6"
+__version__ = "1.7"
 __status__ = "work in progress"
 
 
@@ -13,6 +13,18 @@ class Fraction:
     >>> f2 = Fraction(1,4)
     >>> print(f2)
     1/4
+    >>> print(Fraction(10,2))
+    5
+    >>> print(Fraction(-10,2))
+    -5
+    >>> print(Fraction(-1,2))
+    -1/2
+    >>> print(Fraction(1,-2))
+    -1/2
+    >>> print(Fraction(-1,-2))
+    1/2
+    >>> print(Fraction(-7,3))
+    -2 1/3
     >>> f1+f2
     Fraction(3, 4)
     >>> f1-f2
@@ -61,10 +73,83 @@ class Fraction:
     Fraction(0, 1)
     >>> Fraction(1,2) % 1
     Fraction(1, 2)
+    >>> Fraction(1,2) / Fraction(0,1)
+    Traceback (most recent call last):
+    ...
+    ArithmeticError: Division durch 0 nicht erlaubt
+    >>> Fraction(1,2) // Fraction(0,1)
+    Traceback (most recent call last):
+    ...
+    ArithmeticError: Division durch 0 nicht erlaubt
+    >>> Fraction(1,2) % Fraction(0,1)
+    Traceback (most recent call last):
+    ...
+    ArithmeticError: Division durch 0 nicht erlaubt
+    >>> 1.5 + Fraction(1,2)
+    Traceback (most recent call last):
+    ...
+    NotImplementedError
+    >>> Fraction(1,2) + 1.5
+    Traceback (most recent call last):
+    ...
+    NotImplementedError
+    >>> 1.5 - Fraction(1,2)
+    Traceback (most recent call last):
+    ...
+    NotImplementedError
+    >>> Fraction(1,2) - 1.5
+    Traceback (most recent call last):
+    ...
+    NotImplementedError
+    >>> 1.5 * Fraction(1,2)
+    Traceback (most recent call last):
+    ...
+    NotImplementedError
+    >>> Fraction(1,2) * 1.5
+    Traceback (most recent call last):
+    ...
+    NotImplementedError
+    >>> 1.5 / Fraction(1,2)
+    Traceback (most recent call last):
+    ...
+    NotImplementedError
+    >>> Fraction(1,2) / 1.5
+    Traceback (most recent call last):
+    ...
+    NotImplementedError
+    >>> 1.5 // Fraction(1,2)
+    Traceback (most recent call last):
+    ...
+    NotImplementedError
+    >>> Fraction(1,2) // 1.5
+    Traceback (most recent call last):
+    ...
+    NotImplementedError
+    >>> 1.5 % Fraction(1,2)
+    Traceback (most recent call last):
+    ...
+    NotImplementedError
+    >>> Fraction(1,2) % 1.5
+    Traceback (most recent call last):
+    ...
+    NotImplementedError
+    >>> Fraction(1,2) % 0
+    Traceback (most recent call last):
+    ...
+    ArithmeticError: Division durch 0 nicht erlaubt
+    >>> 5 % Fraction(0,2)
+    Traceback (most recent call last):
+    ...
+    ArithmeticError: Division durch 0 nicht erlaubt
+    >>> print(3 + 1 / (7 + Fraction(1, 15)))
+    3 15/106
     """
 
     def __init__(self, zaehler=0, nenner=1):
         """Konstuktor"""
+
+        if nenner == 0:
+            raise ArithmeticError("Division durch 0 nicht erlaubt")
         self._numerator = zaehler
         self._denominator = nenner
         self.kuerzen()
@@ -107,8 +192,13 @@ class Fraction:
 
     def __add__(self, other):
         """Addition"""
-        return Fraction(self.numerator * other.denominator + other.numerator * self.denominator,
+        if isinstance(other, int):
+            return Fraction(self.numerator + other * self.denominator, self.denominator)
+        elif isinstance(other, Fraction):
+            return Fraction(self.numerator * other.denominator + other.numerator * self.denominator,
                         self.denominator * other.denominator)
+        else:
+            raise NotImplementedError
 
     def __radd__(self, other):
         """Addition"""
@@ -119,8 +209,13 @@ class Fraction:
 
     def __sub__(self, other):
         """Subtraktion"""
-        return Fraction(self.numerator * other.denominator - other.numerator * self.denominator,
+        if isinstance(other, int):
+            return Fraction(self.numerator - other * self.denominator, self.denominator)
+        elif isinstance(other, Fraction):
+            return Fraction(self.numerator * other.denominator - other.numerator * self.denominator,
                         self.denominator * other.denominator)
+        else:
+            raise NotImplementedError
 
     def __rsub__(self, other):
         """Subtraktion"""
@@ -131,7 +226,12 @@ class Fraction:
 
     def __mul__(self, other):
         """Multiplikation"""
-        return Fraction(self.numerator * other.numerator, self.denominator * other.denominator)
+        if isinstance(other, int):
+            return Fraction(self.numerator * other, self.denominator)
+        elif isinstance(other, Fraction):
+            return Fraction(self.numerator * other.numerator, self.denominator * other.denominator)
+        else:
+            raise NotImplementedError
 
     def __rmul__(self, other):
         """Multiplikation"""
@@ -142,7 +242,12 @@ class Fraction:
 
     def __truediv__(self, other):
         """Division"""
-        return Fraction(self.numerator * other.denominator, self.denominator * other.numerator)
+        if isinstance(other, int):
+            return Fraction(self.numerator, self.denominator * other)
+        elif isinstance(other, Fraction):
+            return Fraction(self.numerator * other.denominator, self.denominator * other.numerator)
+        else:
+            raise NotImplementedError
 
     def __rtruediv__(self, other):
         """Division"""
@@ -153,7 +258,12 @@ class Fraction:
 
     def __floordiv__(self, other):
         """Division"""
-        return Fraction(self.numerator * other.denominator, self.denominator * other.numerator).__float__().__floor__()
+        if isinstance(other, int):
+            return Fraction(self.numerator, self.denominator * other).__float__().__floor__()
+        elif isinstance(other, Fraction):
+            return Fraction(self.numerator * other.denominator, self.denominator * other.numerator).__float__().__floor__()
+        else:
+            raise NotImplementedError
 
     def __rfloordiv__(self, other):
         """Division"""
@@ -164,13 +274,27 @@ class Fraction:
 
     def __mod__(self, other):
         """Modulo"""
-        return Fraction((self.numerator * other.denominator) % (self.denominator * other.numerator),
-                        self.denominator * other.denominator)
+        if isinstance(other, int):
+            try:
+                return Fraction(self.numerator % (self.denominator * other), self.denominator)
+            except ZeroDivisionError:
+                raise ArithmeticError("Division durch 0 nicht erlaubt")
+        elif isinstance(other, Fraction):
+            try:
+                return Fraction((self.numerator * other.denominator) % (self.denominator * other.numerator),
+                                self.denominator * other.denominator)
+            except ZeroDivisionError:
+                raise ArithmeticError("Division durch 0 nicht erlaubt")
+        else:
+            raise NotImplementedError
 
     def __rmod__(self, other):
         """Modulo"""
         if isinstance(other, int):
-            return Fraction((other * self.denominator) % self.numerator, self.denominator)
+            try:
+                return Fraction(other * self.denominator % self.numerator, self.denominator)
+            except ZeroDivisionError:
+                raise ArithmeticError("Division durch 0 nicht erlaubt")
         else:
             raise NotImplementedError
 
