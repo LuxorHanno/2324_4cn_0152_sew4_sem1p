@@ -149,6 +149,10 @@ class Fraction:
     1
     >>> print(Fraction(1_000_000_000_000_000_001, 1_000_000_000_000_000_000) > 1)
     True
+    >>> print(Fraction(2,1) == 2)
+    True
+    >>> float(Fraction(2,1))
+    2.0
     """
 
     def __init__(self, zaehler=0, nenner=1):
