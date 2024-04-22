@@ -1,6 +1,6 @@
 __author__ = "Hanno Postl"
 __version__ = "1.7"
-__status__ = "work in progress"
+__status__ = "Finished"
 
 
 class Fraction:
@@ -143,6 +143,12 @@ class Fraction:
     ArithmeticError: Division durch 0 nicht erlaubt
     >>> print(3 + 1 / (7 + Fraction(1, 15)))
     3 15/106
+    >>> print(Fraction(-1,2) / Fraction(-1,-3))
+    -1 1/2
+    >>> print(Fraction(1))
+    1
+    >>> print(Fraction(1_000_000_000_000_000_001, 1_000_000_000_000_000_000) > 1)
+    True
     """
 
     def __init__(self, zaehler=0, nenner=1):
@@ -175,7 +181,7 @@ class Fraction:
             self.numerator *= -1
             ret = "-"
 
-        if self.numerator > self.denominator:
+        if self.numerator >= self.denominator:
             if (self.numerator % self.denominator) == 0:
                 return f"{ret}{self.numerator // self.denominator}"
             else:
@@ -300,7 +306,7 @@ class Fraction:
 
     def __eq__(self, other):
         """Gleichheit"""
-        return self.numerator == other.numerator and self.denominator == other.denominator
+        return self.numerator*other.denominator == other.numerator * self.denominator
 
     def __ne__(self, other):
         """Ungleichheit"""
@@ -308,19 +314,19 @@ class Fraction:
 
     def __lt__(self, other):
         """Kleiner"""
-        return self.__float__() < other.__float__()
+        return self.numerator*other.denominator < other.numerator * self.denominator
 
     def __le__(self, other):
         """Kleiner gleich"""
-        return self.__float__() <= other.__float__()
+        return self.numerator*other.denominator <= other.numerator * self.denominator
 
     def __gt__(self, other):
         """Größer"""
-        return self.__float__() > other.__float__()
+        return self.numerator*other.denominator > other.numerator * self.denominator
 
     def __ge__(self, other):
         """Größer gleich"""
-        return self.__float__() >= other.__float__()
+        return self.numerator*other.denominator >= other.numerator * self.denominator
 
     @property
     def numerator(self) -> int:
