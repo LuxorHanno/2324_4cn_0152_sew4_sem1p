@@ -5,9 +5,25 @@ __status__ = "Finished"
 import pandas as pd
 import argparse
 
-noten = r'C:\Users\hanno\PycharmProjects\2324_4cn_0152_sew4_sem1p\UE09\res\noten.csv'
-alleNoten = r'C:\Users\hanno\PycharmProjects\2324_4cn_0152_sew4_sem1p\UE09\res\result_all.csv'
-sewNoten = r'C:\Users\hanno\PycharmProjects\2324_4cn_0152_sew4_sem1p\UE09\res\result_SEW.csv'
+r"""noten = r'C:\Users\hanno\PycharmProjects\2324_4cn_0152_sew4_sem1p\UE09\res\noten.csv'
+schueler = r'C:\Users\hanno\PycharmProjects\2324_4cn_0152_sew4_sem1p\UE09\res\schueler.xml'
+"""
+
+import re
+import pandas as pd
+import argparse
+import os
+import sys
+
+
+def read_xml(filename: str) -> pd.DataFrame:
+    with open(filename, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    pattern = re.compile("<Schueler>\s*<Nummer>(.*?)</Nummer>\s*<Anrede>(.*?)</Anrede>\s*<Vorname>(.*?)</Vorname>\s*<Nachname>(.*?)</Nachname>\s*<Geburtsdatum>(.*?)</Geburtsdatum>", flags=re.DOTALL)
+    result = re.findall(pattern, content)
+    df = pd.DataFrame(result, columns=['Nummer', 'Anrede', 'Vorname', 'Nachname', 'Geburtsdatum'], dtype=str)
+    return df
 
 if __name__ == "__main__":
     # Argument parser for command line arguments
@@ -26,5 +42,35 @@ if __name__ == "__main__":
     # Parse the arguments
     args = parser.parse_args()
 
-    """allNotes = pd.read_csv(noten, header=0, sep=';')
-    print(allNotes)"""
+    # Check if input file exists
+    if not os.path.exists(args.n):
+        sys.stderr.write(args.n + ": " + os.strerror(2))
+    elif not os.path.exists(args.s):
+        sys.stderr.write(args.s + ": " + os.strerror(2))
+    else:
+        # Read the input files
+        noten = pd.read_csv(args.n, sep=';', dtype=str, encoding='utf-8')
+        schueler = read_xml(args.s)
+
+
+        # Merge the dataframes
+        result = pd.merge(schueler, noten, on='Nummer')
+        print (result)
+
+        # Filter the data
+        if args.f:
+            result = result[result['Gegenstand'] == args.f]
+
+        # Write the result to a csv file
+        result.to_csv(args.outfile, sep=';',index=False)
+
+        # If verbose mode is on
+        if args.verbose:
+            print(f"""csv-Datei mit den Noten : {args.n}
+            xml-Datei mit den Schülerdaten : {args.s}
+            Name der Spalte, die zu verknüpfen ist : {args.m}
+            Output-Datei: {args.outfile}""")
+        elif args.quiet:
+            pass
+        else:
+            print(f"Output-Datei: {args.outfile}")
