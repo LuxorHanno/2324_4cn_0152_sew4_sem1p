@@ -26,6 +26,5 @@ if __name__ == "__main__":
     # Parse the arguments
     args = parser.parse_args()
 
-
     """allNotes = pd.read_csv(noten, header=0, sep=';')
     print(allNotes)"""
