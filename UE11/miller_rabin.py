@@ -1,10 +1,9 @@
 """
 Author: Hanno Postl
-Version: 1.1
+Version: 1.2
 Status: Finished
 """
 import random
-from collections import Counter
 
 FIRST_100_PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
                     31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
