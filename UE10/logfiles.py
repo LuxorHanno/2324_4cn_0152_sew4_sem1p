@@ -1,11 +1,9 @@
 """
 Author: Hanno Postl
-Version: 1.0
-Status: Under Construction
+Version: 1.1
+Status: Finished
 """
 
-import gzip
-import os
 from typing import Generator, Iterable, TextIO, List, Tuple, Dict
 from collections import defaultdict, Counter
 from get_all_files import *
