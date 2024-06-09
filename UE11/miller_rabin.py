@@ -1,6 +1,6 @@
 """
 Author: Hanno Postl
-Version: 1.0
+Version: 1.1
 Status: Finished
 """
 import random
