@@ -27,17 +27,6 @@ def is_prime(n: int) -> bool:
             return n == prime
     return is_prim_millerrabin(n) == "probably prime"
 
-def is_prime(number):
-    """
-    Teste die ersten 100 Primzahlen auf Primzahl.
-    """
-    for prime in FIRST_100_PRIMES:
-        if number % prime == 0:
-            return number == prime
-
-    return is_prim_millerrabin(number) == "probably prime"
-
-
 def is_prim_millerrabin(number, iterations=20):
     """
     Check if a number is prime using the Miller-Rabin primality test.
@@ -68,7 +57,7 @@ def is_prim_millerrabin(number, iterations=20):
 
 
     for i in range(iterations):
-        base =  random.randint(2, number-1)
+        base = random.randint(2, number-1)
         if is_composite(base,d,s,number):
             return "composite"
     return "probably prime"

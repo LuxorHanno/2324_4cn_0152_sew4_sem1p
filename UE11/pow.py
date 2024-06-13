@@ -1,6 +1,6 @@
 __author__ = "Hanno Postl"
 __version__ = "1.0"
-__status__ = "under construction"
+__status__ = "Finished"
 
 import time
 
