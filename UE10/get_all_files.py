@@ -3,7 +3,7 @@ Author: Hanno Postl
 Version: 1.2
 Status: Finished
 """
-
+from __future__ import annotations
 
 import os
 from collections.abc import Iterable, Generator
